@@ -1,0 +1,18 @@
+{
+  "name": "erae2-rig-map",
+  "version": "1.0.0",
+  "description": "MIDI rig mapper and configuration guide for the Embodme Erae Touch 2 — hardware synth presets, channel planning, Erae Lab recipes, and signal-flow diagrams.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "esbuild src/entry.jsx --bundle --loader:.jsx=jsx --define:process.env.NODE_ENV='\"development\"' --outfile=public/app.js --servedir=public --serve=127.0.0.1:8080",
+    "check": "esbuild src/entry.jsx --bundle --loader:.jsx=jsx --outfile=/dev/null"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}

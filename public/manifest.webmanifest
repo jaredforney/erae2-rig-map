@@ -1,0 +1,9 @@
+{
+  "name": "Erae 2 Rig Map",
+  "short_name": "Rig Map",
+  "display": "standalone",
+  "start_url": ".",
+  "background_color": "#141517",
+  "theme_color": "#141517",
+  "icons": [{ "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }]
+}
