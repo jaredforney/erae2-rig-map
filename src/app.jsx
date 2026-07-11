@@ -417,6 +417,40 @@ const DEVICE_LIBRARY = [
     ],
   },
   {
+    libKey: "ableton_move", chans: [], route: "usbhost", blurb: "Ableton groovebox — notes + poly AT only, no CC",
+    diagSub: { rk: "USB Host · Move USB-C · notes + poly AT", thru: "USB Host · Move USB-C · notes + poly AT" },
+    device: "Ableton Move", channel: "Auto (selected track receives)", color: "#FFC94D",
+    connection: "USB Host → Move USB-C (Move ≥ 1.7, Standalone Mode)", port: "USB Host",
+    source: "Ableton Move manual §4.1.3 + §2.1.7 · Move release notes 1.2.0/1.3.0/1.5.0/1.7.0 (Oct 2025)",
+    lab: { ch: "any (Move: Auto)", dest: ["USB HOST"], pressure: "Polyphonic (per-note)", pressureCC: null, pb: "verify — receive undocumented", mpe: false },
+    expression: [
+      { cap: "Velocity", status: "yes", note: "Full velocity on notes in and out" },
+      { cap: "Pressure", status: "yes", note: "Polyphonic AT received (and sent since fw 1.3) — set the Erae pressure type to Polyphonic, not Channel" },
+      { cap: "Pitch bend", status: "verify", note: "Not documented either way — test on hardware" },
+      { cap: "MPE", status: "no", note: "Poly AT ≠ MPE; keep MPE off on this element" },
+    ],
+    eraeSetup: [
+      "Keys element: any channel — with Move's tracks on MIDI In: Auto, whichever track is selected on Move receives the notes.",
+      "Keys pressure: Expressivity Tune > Pressure → Enable, Type: Polyphonic — Move is one of the few boxes that honors true per-note pressure from the Erae.",
+      "Optional drum grid: a second pads element for Move's drum track — capture the pad→note layout from Move first (undocumented; verify).",
+      "Skip faders, XY, and CC buttons for this device: Move ignores all Control Change and Program Change (manual §4.1.3). Spend that surface on other rig devices.",
+      "Output Destination: USB HOST. The default rig's TX-6 owns that port — share it through a powered USB hub, or swap the TX-6 out of the slot.",
+    ],
+    deviceSetup: [
+      "Update Move to firmware 1.7.0 or later — USB-C MIDI toward a USB host (the Erae) arrived in 1.7.",
+      "Stay in Standalone Mode: MIDI send/receive is disabled while Move is in Control Live Mode.",
+      "Setup > MIDI: enable MIDI In. Per track: Shift + track button → press the wheel → MIDI In → Auto (or a fixed channel for per-track zones).",
+      "Cable: Move's USB-C into the hub/host port. Move runs on its own battery; the link is data.",
+    ],
+    tip: "Notes in, notes out — that's the whole contract: Move ignores CC, Program Change, and channel aftertouch, so no fader or XY element will ever reach it. What it does receive is polyphonic aftertouch, which the Erae sends natively — per-finger pressure lands per pad. With MIDI In on Auto, Move's selected track receives everything; pin tracks to fixed channels instead if you want four dedicated Erae zones. Move can also send MIDI clock to the rig (fw 1.2+); clock receive is newer — verify on your firmware.",
+    mappings: [
+      m("Keys / pads", "notes", "keys", "solid", "Auto: plays Move's selected track"),
+      m("Per-track zones ×4", "notes", "keys", "custom", "Set Move tracks to fixed ch 1–4 instead of Auto"),
+      m("Drum track grid", "notes", "keys", "verify", "Pad→note layout undocumented — capture from Move"),
+      m("Poly aftertouch", "notes", "keys", "solid", "Pressure type: Polyphonic on the same element"),
+    ],
+  },
+  {
     libKey: "custom", chans: [], route: "bus", blurb: "Blank template — start from scratch",
     diagSub: { rk: "TRS-A / adapter · set channel", thru: "DIN cable · set channel" },
     device: "Custom device", channel: "set me", color: "#8FA1FF",
@@ -453,7 +487,7 @@ const instantiate = (libKey) => {
 };
 
 const ELEMENT_TYPES = ["fader", "keys", "pads", "xy", "button"];
-const STORAGE_KEY = "erae2-midi-map-v9";
+const STORAGE_KEY = "erae2-midi-map-v10";
 
 // ---------- small components ----------
 function ConfBadge({ conf, onCycle }) {
