@@ -1,7 +1,8 @@
 # Ableton Move device template — design
 
-Add the Ableton Move to the Erae 2 Rig Map as a first-class device template,
-in the default rig, replacing the SP-404 MKII (which remains in the library palette).
+Add the Ableton Move to the Erae 2 Rig Map as a first-class device template
+in the library palette only. The default rig is unchanged — the TX-6 keeps
+the USB Host port; users swap the Move in themselves.
 
 ## Sources
 
@@ -14,10 +15,12 @@ in the default rig, replacing the SP-404 MKII (which remains in the library pale
 
 ## MIDI facts the template encodes
 
-- **USB only.** No DIN/TRS. Route: `usbhost` — Erae 2 USB Host → Move USB-C
-  (requires Move ≥ 1.7, Standalone Mode). Move runs on its own battery/PSU;
-  the host link is data. If the TX-6 is also in the rig, both share the host
-  port through a powered USB hub.
+- **USB only.** No DIN/TRS, and no Bluetooth (Move's wireless is Wi-Fi/Link
+  only — verified against Ableton's tech specs). Route: `usbhost` — Erae 2
+  USB Host → Move USB-C (requires Move ≥ 1.7, Standalone Mode). Move runs on
+  its own battery/PSU; the host link is data. Since the default rig's TX-6
+  also occupies the host port, the template's setup notes say: share the
+  port through a powered USB hub, or swap the TX-6 out.
 - **Notes + poly aftertouch only.** Manual: "Move can receive polyphonic
   aftertouch messages; monophonic aftertouch, MIDI CC, and MIDI mapping are
   not supported." No CC control, no program change. Conf: solid.
@@ -58,10 +61,10 @@ TX-6 (the other usbhost device): `chans: []` (off-bus, no collision math),
 
 ## Rig defaults & versioning
 
-- `DEFAULT_RIG_KEYS`: replace `"sp404"` with `"ableton_move"` (SP-404 stays
-  in the library). Side effect: DIN-bus channels 1–10 + 16 free up in the
-  default rig.
-- **Bump `STORAGE_KEY` v9 → v10** (default template data changed).
+- `DEFAULT_RIG_KEYS`: unchanged. Move appears in the Add/Swap palette,
+  inserted before the `custom` entry in `DEVICE_LIBRARY`.
+- **Bump `STORAGE_KEY` v9 → v10** (per CLAUDE.md's "Adding a device" rule —
+  template data changed).
 
 ## Testing
 
